@@ -9,3 +9,4 @@ bun.lockb
 .idea/
 bin
 air
+.DS_Store

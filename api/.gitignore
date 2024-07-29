@@ -1,3 +1,4 @@
 .env
 server.pid
 vendor/
+.DS_Store
