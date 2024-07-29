@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@catppuccin/tailwindcss": "^0.1.6",
+    "tailwindcss": "^3.3.5"
+  },
+  "scripts": {
+    "dev:css": "tailwindcss -i ./static/public/assets/css/custom.css -o ./static/public/assets/css/tailwind.css --watch --minify"
+  },
+  "dependencies": {
+    "flowbite": "^2.3.0"
+  }
+}

@@ -1,0 +1,988 @@
+basePath: /api/v1
+definitions:
+  entity.Category:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      is_featured:
+        enum:
+        - false
+        - true
+        type: boolean
+      label:
+        minimum: 0
+        type: integer
+      order:
+        minimum: 0
+        type: integer
+      parent_id:
+        type: integer
+      slug:
+        type: string
+      status_id:
+        minimum: 1
+        type: integer
+      title:
+        maxLength: 191
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: integer
+      view_count:
+        minimum: 0
+        type: integer
+    required:
+    - id
+    - status_id
+    type: object
+  entity.CategoryResponsePagination:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.ResponseCategory'
+        type: array
+      pagination:
+        $ref: '#/definitions/entity.Pagination'
+    type: object
+  entity.Department:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      delete_at:
+        type: string
+      id:
+        description: Primary key
+        type: integer
+      slug:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status_id:
+        type: integer
+      title:
+        maxLength: 100
+        minLength: 3
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: integer
+    required:
+    - slug
+    - title
+    type: object
+  entity.DepartmentResponsePagination:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.ResponseDepartment'
+        type: array
+      pagination:
+        $ref: '#/definitions/entity.Pagination'
+    type: object
+  entity.Designation:
+    properties:
+      created_at:
+        type: string
+      id:
+        description: Primary key
+        type: integer
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    required:
+    - name
+    type: object
+  entity.DesignationResponsePagination:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.ResponseDesignation'
+        type: array
+      pagination:
+        $ref: '#/definitions/entity.Pagination'
+    type: object
+  entity.LoginUser:
+    properties:
+      email:
+        maxLength: 15
+        minLength: 11
+        type: string
+      password:
+        maxLength: 20
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  entity.Pagination:
+    properties:
+      current_page:
+        type: integer
+      first_page:
+        type: integer
+      last_page:
+        type: integer
+      next_page:
+        type: integer
+      prev_page:
+        type: integer
+      total_items:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  entity.RefreshToken:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  entity.ResponseCategory:
+    properties:
+      child_category:
+        items:
+          $ref: '#/definitions/entity.ResponseCategory'
+        type: array
+      id:
+        type: integer
+      order:
+        type: integer
+      parent_id:
+        type: integer
+      slug:
+        type: string
+      status_id:
+        type: integer
+      title:
+        type: string
+    type: object
+  entity.ResponseDepartment:
+    properties:
+      created_by:
+        type: integer
+      id:
+        type: integer
+      slug:
+        type: string
+      status_id:
+        type: integer
+      title:
+        type: string
+      updated_by:
+        type: integer
+    type: object
+  entity.ResponseDesignation:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  entity.ResponseRole:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  entity.ResponseUser:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  entity.Role:
+    properties:
+      created_at:
+        type: string
+      id:
+        description: Primary key
+        type: integer
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    required:
+    - name
+    type: object
+  entity.RoleResponsePagination:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.ResponseRole'
+        type: array
+      pagination:
+        $ref: '#/definitions/entity.Pagination'
+    type: object
+  entity.UpdateCategory:
+    properties:
+      status_id:
+        minimum: 1
+        type: integer
+      title:
+        maxLength: 191
+        type: string
+    required:
+    - status_id
+    type: object
+  entity.UpdateDepartment:
+    properties:
+      slug:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status_id:
+        type: integer
+      title:
+        maxLength: 100
+        minLength: 3
+        type: string
+      updated_at:
+        type: string
+      updated_by:
+        type: integer
+    required:
+    - slug
+    - title
+    type: object
+  entity.UpdateDesignation:
+    properties:
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  entity.UpdateRole:
+    properties:
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  entity.UpdateUser:
+    properties:
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  entity.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        description: Primary key
+        type: integer
+      name:
+        maxLength: 100
+        minLength: 3
+        type: string
+      password:
+        maxLength: 100
+        minLength: 6
+        type: string
+      role:
+        type: integer
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  entity.UserResponsePagination:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.ResponseUser'
+        type: array
+      pagination:
+        $ref: '#/definitions/entity.Pagination'
+    type: object
+host: localhost:9009
+info:
+  contact:
+    email: jubaer01.cse@gmail.com
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is the API documentation for the News API
+  title: News API
+  version: "1.0"
+paths:
+  /auth/refresh-token:
+    post:
+      consumes:
+      - application/json
+      description: Get refresh-token
+      parameters:
+      - description: The Auth to be created
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RefreshToken'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get refresh-token
+      tags:
+      - refresh-token
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: Get sign-in
+      parameters:
+      - description: The Auth to be created
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get sign-in
+      tags:
+      - sign-in
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: Get details of all categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.CategoryResponsePagination'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all categories
+      tags:
+      - categories
+    post:
+      consumes:
+      - application/json
+      description: Create a new Category
+      parameters:
+      - description: The Category to be created
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Category created successfully
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Category
+      tags:
+      - categories
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Category
+      parameters:
+      - description: The ID of the Category
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Category deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a Category
+      tags:
+      - categories
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Category
+      parameters:
+      - description: The ID of the Category
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Category object
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Category updated successfully
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update an existing Category
+      tags:
+      - categories
+  /categories/{id}/details:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a Category by ID
+      parameters:
+      - description: The ID of the Category
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseCategory'
+      security:
+      - ApiKeyAuth: []
+      summary: Get detailed information about a Category by ID
+      tags:
+      - categories
+  /departments:
+    get:
+      consumes:
+      - application/json
+      description: Get details of all departments
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Search query
+        in: query
+        name: search
+        type: string
+      - description: Sort by
+        in: query
+        name: sort
+        type: string
+      - description: Filter by status
+        in: query
+        name: status
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.DepartmentResponsePagination'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all departments
+      tags:
+      - departments
+    post:
+      consumes:
+      - application/json
+      description: Create a new Department
+      parameters:
+      - description: The Department to be created
+        in: body
+        name: department
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Department'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Department
+      tags:
+      - departments
+  /departments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Department
+      parameters:
+      - description: The ID of the Department
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a Department
+      tags:
+      - departments
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Department
+      parameters:
+      - description: The ID of the Department
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Department object
+        in: body
+        name: department
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateDepartment'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update an existing Department
+      tags:
+      - departments
+  /departments/{id}/details:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a Department by ID
+      parameters:
+      - description: The ID of the Department
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseDepartment'
+      security:
+      - ApiKeyAuth: []
+      summary: Get detailed information about a Department by ID
+      tags:
+      - departments
+  /designations:
+    get:
+      consumes:
+      - application/json
+      description: Get details of all designations
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Search query
+        in: query
+        name: search
+        type: string
+      - description: Sort by
+        in: query
+        name: sort
+        type: string
+      - description: Filter by status
+        in: query
+        name: status
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.DesignationResponsePagination'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all designations
+      tags:
+      - designations
+    post:
+      consumes:
+      - application/json
+      description: Create a new Designation
+      parameters:
+      - description: The Designation to be created
+        in: body
+        name: designation
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Designation'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Designation
+      tags:
+      - designations
+  /designations/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Designation
+      parameters:
+      - description: The ID of the Designation
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a Designation
+      tags:
+      - designations
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Designation
+      parameters:
+      - description: The ID of the Designation
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Designation object
+        in: body
+        name: designation
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateDesignation'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update an existing Designation
+      tags:
+      - designations
+  /designations/{id}/details:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a Designation by ID
+      parameters:
+      - description: The ID of the Designation
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseDesignation'
+      security:
+      - ApiKeyAuth: []
+      summary: Get detailed information about a Designation by ID
+      tags:
+      - designations
+  /roles:
+    get:
+      consumes:
+      - application/json
+      description: Get details of all roles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.RoleResponsePagination'
+      summary: Get all roles
+      tags:
+      - roles
+    post:
+      consumes:
+      - application/json
+      description: Create a new Role
+      parameters:
+      - description: The Role to be created
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Role'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new Role
+      tags:
+      - roles
+  /roles/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Role
+      parameters:
+      - description: The ID of the Role
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete a Role
+      tags:
+      - roles
+    put:
+      consumes:
+      - application/json
+      description: Update an existing Role
+      parameters:
+      - description: The ID of the Role
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Role object
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateRole'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update an existing Role
+      tags:
+      - roles
+  /roles/{id}/details:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a Role by ID
+      parameters:
+      - description: The ID of the Role
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get detailed information about a Role by ID
+      tags:
+      - roles
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get details of all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.UserResponsePagination'
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new User
+      parameters:
+      - description: The User to be created
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entity.User'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new User
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a User
+      parameters:
+      - description: The ID of the User
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete a User
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update an existing User
+      parameters:
+      - description: The ID of the User
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated User object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UpdateUser'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update an existing User
+      tags:
+      - users
+  /users/{id}/details:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a User by ID
+      parameters:
+      - description: The ID of the User
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get detailed information about a User by ID
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

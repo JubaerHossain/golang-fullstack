@@ -1,0 +1,11 @@
+.env
+node_modules/
+*tmp/
+tmp/*
+bun.lockb
+*.log
+*.txt
+*sync-conflict*
+.idea/
+bin
+air

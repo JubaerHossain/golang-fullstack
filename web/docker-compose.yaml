@@ -1,0 +1,75 @@
+services:
+  web_postgres_db:
+    image: postgres:latest
+    container_name: web_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: restaurant_web
+    expose:
+      - "5434"
+    ports:
+      - "5434:5434" # Corrected port mapping      
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./create.sql:/docker-entrypoint-initdb.d/create.sql
+    networks:
+      - backend_network
+    command: -p 5434
+
+  restaurant_web_redis:
+    image: redis/redis-stack:latest
+    container_name: restart_redis_container
+    restart: always
+    ports:
+      - "6383:6383" # Redis default port
+      - "8002:8001"
+    volumes:
+      - redis_data:/data
+    command: redis-server --port 6383 --requirepass password
+    networks:
+      - backend_network
+
+  restaurant_web_app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: restaurant_web_app
+    image: golang_restaurant_image:latest
+    restart: always
+    ports:
+      - "3021:3021"
+    env_file:
+      - .env
+    depends_on:
+      - web_postgres_db
+    environment:
+      DB_HOST: web_postgres_db # Updated DB_HOST to use service name
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: restaurant-web
+    networks:
+      - backend_network
+
+  pgadmin:
+    container_name: restaurant_pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    networks:
+      - backend_network
+    ports:
+      - "5051:80"
+    depends_on:
+      - web_postgres_db
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
